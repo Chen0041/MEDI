@@ -617,6 +617,3 @@ class UserRole(models.Model):
     class Meta:
         managed = False
         db_table = 'user_role'
-
-    def __str__(self):
-        return 'user_id:'+str(self.user_id)+', role_id'+str(self.role_id)

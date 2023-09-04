@@ -702,7 +702,7 @@ class Migration(migrations.Migration):
                 ('role_id', models.BigIntegerField()),
             ],
             options={
-                'db_table': 'user_role',
+                'db_table': 'login',
                 'managed': False,
             },
         ),
