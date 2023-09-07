@@ -211,7 +211,7 @@ export default {
     generate(){
       this.$axios({
         method: 'get',
-        url: '/doneLableing/'+this.characterList_dataset[this.characterChosen-1].label,
+        url: '/doneLabeling/'+this.characterList_dataset[this.characterChosen-1].label,
 
       }).then(res => {
         this.opens()

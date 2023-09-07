@@ -58,24 +58,13 @@
           <el-upload class="upload-demo"
                      ref="upload"
                      drag
-                     action="http://localhost:8089/upload"
+                     action="http://localhost:8000/api/upload"
                      multiple
                      :auto-upload="false"
                      :limit="5"
                      :on-success="handleFilUploadSuccess"
                      :on-remove="handleRemove"
           >
-<!-- -->
-<!--          <el-upload-->
-<!--              class="upload-demo"-->
-<!--              drag-->
-<!--              ref="upload"-->
-<!--              action="http://localhost:8089/upload"-->
-<!--              :auto-upload="false"-->
-<!--              :limit="5"-->
-<!--              :on-success="handleFilUploadSuccess"-->
-<!--              :on-remove="handleRemove"-->
-<!--              multiple>-->
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">drop files here,or <em>click here to upload files</em></div>
             <div class="el-upload__tip" slot="tip">please upload zip files</div>

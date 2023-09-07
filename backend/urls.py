@@ -11,5 +11,9 @@ urlpatterns = [
     path('index', views.index, name='index'),
     path('user/login', views.login, name='login'),
 
-    path('dataSets', dataset_controller.get_datasets, name='dataSets')
+    path('dataSets', dataset_controller.get_datasets, name='dataSets'),
+    path('addDataset', dataset_controller.add_dataset, name='addDataset'),
+    path('upload', dataset_controller.upload, name='upload')
+
+
 ]
