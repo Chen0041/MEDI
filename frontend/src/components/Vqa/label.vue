@@ -156,7 +156,7 @@ export default {
       photoFile:'',
       dias:[],
       patientIds:[],
-      pngFile:'1.png',
+      // pngFile:'1.png', No Usage
       currentPage: 1, // 当前页码
       total: 20, // 总条数
       pageSize: 100 ,// 每页的数据条数

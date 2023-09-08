@@ -2,18 +2,15 @@ import json
 import os
 from concurrent.futures._base import LOGGER
 
-from django.core.files import File
-from django.core.files.storage import Storage
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
-from django.http import HttpResponse, FileResponse, JsonResponse
-import subprocess
+from django.http import HttpResponse, JsonResponse
 
 from backend.models import Dataset
 from backend.service import dataset_service
 from backend.vqa_dataset_gene.main import main as python_main
 
-from MEDI.settings import dataset_QApythonscript, dataset_pythonenv, fronted_static, dataset_upload
+from MEDI.settings import dataset_upload, frontend_static
 
 
 @csrf_exempt
@@ -21,6 +18,36 @@ from MEDI.settings import dataset_QApythonscript, dataset_pythonenv, fronted_sta
 def get_datasets(request):
     datasets = dataset_service.get_all_datasets()
     return HttpResponse(json.dumps(datasets), content_type="application/json")
+
+@csrf_exempt
+@require_http_methods(["GET"])
+def get_all_names_labeled(request):
+    dataset_pos = list(Dataset.objects.all())
+
+    ret = []
+    for dataset in dataset_pos:
+        if dataset.islabeled == 0:
+            continue
+        ret.append(dataset.name)
+
+    print(ret)
+    return HttpResponse(json.dumps(ret), content_type="application/json")
+
+
+@csrf_exempt
+@require_http_methods(["GET"])
+def get_all_names(request):
+    dataset_pos = list(Dataset.objects.all())
+
+    ret = []
+    for dataset in dataset_pos:
+        print(dataset.name)
+        if dataset.islabeled == 1:
+            continue
+        ret.append(dataset.name)
+
+    print(ret)
+    return HttpResponse(json.dumps(ret), content_type="application/json")
 
 
 @csrf_exempt
@@ -54,24 +81,9 @@ def upload(request):
             f.write(chunk)
 
     try:
-        python_main(save_path, fronted_static)
+        python_main(save_path, frontend_static)
         # python_main(file_path, img_path)
-        return JsonResponse("success")
+        return HttpResponse("success")
     except Exception as e:
         LOGGER.error(str(e), e)
         return JsonResponse({"error": "Upload failed"}, status=400)
-#
-#
-# def python_script(file_src):
-#     env = dataset_pythonenv
-#     img_path = fronted_static
-#     model = dataset_QApythonscript
-#     cmd = f"{env} {model} --name {file_src} --imgpath {img_path}"
-#
-#     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-#     stdout, stderr = process.communicate()
-#
-#     if process.returncode != 0:
-#         raise Exception(f"命令执行出错: {stderr.decode()}")
-#
-#     return stdout.decode()

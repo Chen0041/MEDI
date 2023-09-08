@@ -5,8 +5,9 @@ import shutil
 import zipfile
 
 from .generateQA import generateQA
-from .generateVQA import generateVQA, insertInformation
-from . import mysqlConnector
+from .generateVQA import insertInformation
+from backend.vqa_dataset_gene import mysqlConnector
+
 
 def organizeOriginalData(src_path):
     with open(src_path + '/relationship.csv', 'r') as f:
@@ -46,6 +47,8 @@ def unzip_file(zip_src, dst_dir):
 def copyImgToImgpath(zip_dest,imgDest):
     imgSrcPath = zip_dest + '/img'
     if not os.path.exists(imgDest +'/'+ zip_dest.split('/')[-1]):
+        print(imgDest)
+        print(zip_dest.split('/')[-1])
         os.mkdir(imgDest +'/'+ zip_dest.split('/')[-1])
     for i in os.listdir(imgSrcPath):
         src = imgSrcPath +'/'+ i

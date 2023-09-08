@@ -21,7 +21,7 @@ dataset_pythonenv = "C:/Users/CZS/.conda/envs/MEDI/python"
 dataset_QApythonscript = '/vqa_dataset_gene/main_py'
 dataset_dest = '/dataset'
 fronted_VQApythonscript = '/vqa_dataset_gene/generateVQA_py'
-fronted_static = '/frontend/static'
+frontend_static = 'frontend/static'
 # model_torch = 'C:/Users/CZS/.conda/envs/MEDI/python'
 # model_tf = 'C:/Users/CZS/.conda/envs/MEDI/python'
 # model save weigth path

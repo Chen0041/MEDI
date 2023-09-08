@@ -3,7 +3,7 @@ import csv
 import os
 import shutil
 
-from . import mysqlConnector
+from backend.vqa_dataset_gene import mysqlConnector
 from .ner import ner
 
 ''' 
@@ -33,20 +33,17 @@ def insertInformation(src, dataset_name, dest, train, valid, test):
         with open(textname, 'r') as f:
             data = f.read()
             entities = ner(data)
-            dialist=''
-            entDic={'DISEASE':[],'CHEMICAL':[]}
+            dialist = ''
+            entDic = {'DISEASE': [], 'CHEMICAL': []}
             for entity in entities:
-                if entity[1]=='DISEASE':
-                    dialist+=entity[0]+','
+                if entity[1] == 'DISEASE':
+                    dialist += entity[0] + ','
 
             patient_id = textid
             photo_id = imgid
             annotation = ''
             dataset = dataset_name
             mysqlConnector.insert_ct_info(patient_id, data, photo_id, dialist, annotation, dataset)
-
-
-    return 0
 
 
 def generateVQA(csv_path, dest, train, valid, test):
@@ -105,12 +102,11 @@ def generateVQA(csv_path, dest, train, valid, test):
             else:
                 image_dir = ''
 
-
             q1 = "Is this a ct image or xray image?"
-            if(type=='1'):
-                a1='CT'
+            if (type == '1'):
+                a1 = 'CT'
             else:
-                a1='X-Ray'
+                a1 = 'X-Ray'
             image_name = photo_id
             answer_type = 'CLOSE'
             question_type = 'ModalityType'
@@ -120,7 +116,7 @@ def generateVQA(csv_path, dest, train, valid, test):
                 writer = csv.writer(f)
                 writer.writerow(Q1)
             qid = qid + 1
-            result.append(image_name + '|' + q1+ '|' + a1)
+            result.append(image_name + '|' + q1 + '|' + a1)
 
     length = len(result)
     trainImgList = []
@@ -156,7 +152,7 @@ def generateVQA(csv_path, dest, train, valid, test):
         f.write(validRes)
 
     if not os.path.exists(dest + 'test'):
-        os.mkdir(dest  + 'test')
+        os.mkdir(dest + 'test')
         for img in testImgList:
             shutil.copy(src + '/organizedData/' + img + '/' + img + '.jpg', dest + 'test')
     with open(dest + 'test.txt', 'w') as f:
@@ -164,7 +160,8 @@ def generateVQA(csv_path, dest, train, valid, test):
 
     return 0
 
-def moveVQApathToDest(file_path,save_dir,dataset):
+
+def moveVQApathToDest(file_path, save_dir, dataset):
     # 因为 file_path 里面没有文件夹，所以不处理有文件夹的情况
     pathDir = os.listdir(file_path)  # os.listdir(file_path) 是获取指定路径下包含的文件或文件夹列表
     for filename in pathDir:  # 遍历pathDir下的所有文件filename
@@ -197,5 +194,3 @@ if __name__ == '__main__':
     # generateVQA(csv_path,dest+'/'+dataset+'/',train, valid, test)
     mysqlConnector.setDatasetStatus(dataset, VQApath)
     # moveVQApathToDest(VQApath,dest,dataset)
-
-
