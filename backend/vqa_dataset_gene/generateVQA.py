@@ -178,10 +178,10 @@ if __name__ == '__main__':
     # after labeling 1. extract labelled information from ct_validation 2. generate VQA pairs
     parser = argparse.ArgumentParser()
     parser.add_argument('--name', default='test')
-    parser.add_argument('--dest')
+    # parser.add_argument('--dest')
     args = parser.parse_args()
     dataset = args.name  # dataset name without route
-    dest = args.dest
+    # dest = args.dest
     print(dataset)
 
     VQApath = "/data2/entity/bhy/VQADEMO/demo/src/main/resources/uploadedDataset/" + dataset + "/VQA/"

@@ -12,16 +12,21 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 
+# Used:
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 # C:\Users\CZS\Desktop\IDEA_Project\MEDI
-dataset_upload = 'C:/Users/CZS/Desktop/IDEA_Project/MEDI/VQAdataset/'
-dataset_pythonenv = "C:/Users/CZS/.conda/envs/MEDI/python"
+dataset_upload = BASE_DIR/'VQAdataset/'
+frontend_static = 'frontend/static'
+dataset_dest = './VQAdataset'
+
+# dataset_pythonenv = "C:/Users/CZS/.conda/envs/MEDI/python"
+
 # model_torch & model_tf
 dataset_QApythonscript = '/vqa_dataset_gene/main_py'
-dataset_dest = '/dataset'
+
 fronted_VQApythonscript = '/vqa_dataset_gene/generateVQA_py'
-frontend_static = 'frontend/static'
+
 # model_torch = 'C:/Users/CZS/.conda/envs/MEDI/python'
 # model_tf = 'C:/Users/CZS/.conda/envs/MEDI/python'
 # model save weigth path

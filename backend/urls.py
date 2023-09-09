@@ -20,4 +20,5 @@ urlpatterns = [
     # label_controller
     path('vqa/<str:dataset>', label_controller.upload_label),
     path('doneLabeling/<str:dataset>', label_controller.done_labeling),
+    path('all/<str:dataset>', label_controller.get_all_patients),
 ]
