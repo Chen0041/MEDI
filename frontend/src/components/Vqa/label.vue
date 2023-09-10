@@ -345,13 +345,13 @@ export default {
         this.patientIds=[]
         for (let row in res.data) {
           if (res.data.hasOwnProperty(row)) {
-            var text = res.data[row].diaList;
+            var text = res.data[row].dia_list;
             var array = text.split("|");
 
             this.patientIds.push({
-              patientId: res.data[row].patientId,
+              patientId: res.data[row].patient_id,
               sym:res.data[row].sym ,
-              photoId: res.data[row].photoId,
+              photoId: res.data[row].photo_id,
               dias:array,
               annotation:res.data[row].annotation
             });

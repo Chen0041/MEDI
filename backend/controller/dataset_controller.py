@@ -17,6 +17,7 @@ from MEDI.settings import dataset_upload, frontend_static
 @require_http_methods(["GET"])
 def get_datasets(request):
     datasets = dataset_service.get_all_datasets()
+    print(datasets)
     return HttpResponse(json.dumps(datasets), content_type="application/json")
 
 @csrf_exempt
@@ -26,7 +27,7 @@ def get_all_names_labeled(request):
 
     ret = []
     for dataset in dataset_pos:
-        if dataset.islabeled == 0:
+        if dataset.islabeled == "0":
             continue
         ret.append(dataset.name)
 
@@ -42,7 +43,7 @@ def get_all_names(request):
     ret = []
     for dataset in dataset_pos:
         print(dataset.name)
-        if dataset.islabeled == 1:
+        if dataset.islabeled == "1":
             continue
         ret.append(dataset.name)
 
@@ -62,7 +63,7 @@ def add_dataset(request):
     if len(name) == 0 or len(description) == 0 or train == 0 or valid is None or test == 0:
         return HttpResponse("Invalid request parameters", status=400)
     else:
-        dataset_po = Dataset(name=name, description=description, islabeled=0, status=0, test=test, train=train,
+        dataset_po = Dataset(name=name, description=description, islabeled="0", status=0, test=test, train=train,
                              valid=valid)
         dataset_service.add_dataset(dataset_po)
         return HttpResponse("Dataset added successfully")

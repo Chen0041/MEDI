@@ -13,15 +13,15 @@ from backend.vqa_dataset_gene import mysqlConnector
 
 @csrf_exempt
 @require_http_methods(["POST"])
-def upload_label(dataset, request):
-    patient_id = request.POST.get('description', None)
-    dia_list = request.POST.get('diaList', None)
-    photo_id = request.POST.get('photoId', None)
-    description = request.POST.get('description', None)
-    bone_name = request.POST.get('boneName', None)
-    direction = request.POST.get('direction', None)
-    type_ = request.POST.get('type', None)
-    position = request.POST.get('position', None)
+def upload_label(request, dataset):
+    patient_id = request.POST.get('description', default="")
+    dia_list = request.POST.get('diaList', default="")
+    photo_id = request.POST.get('photoId', default="")
+    description = request.POST.get('description', default="")
+    bone_name = request.POST.get('boneName', default="")
+    direction = request.POST.get('direction', default="")
+    type_ = request.POST.get('type', default="")
+    position = request.POST.get('position', default="")
     if len(patient_id) == 0 or len(dia_list) == 0 or len(photo_id) == 0 or len(description) == 0 or \
             len(bone_name) == 0 or len(direction) == 0 or len(type_) == 0 or len(position) == 0:
         return HttpResponse("Invalid request parameters", status=400)
@@ -42,7 +42,7 @@ def upload_label(dataset, request):
 
 @csrf_exempt
 @require_http_methods(["POST"])
-def done_labeling(dataset, request):
+def done_labeling(request, dataset):
     try:
         VQApath = dataset_upload + "/" + dataset + "/VQA/"
         print(VQApath)
@@ -55,8 +55,8 @@ def done_labeling(dataset, request):
 
 @csrf_exempt
 @require_http_methods(["GET"])
-def get_all_patients(dataset, request):
-    ctInfo_pos = list(CtInformation.objects.filter(status=0, dataset=dataset))
+def get_all_patients(request, dataset):
+    ctInfo_pos = list(CtInformation.objects.filter(status=0, dataset=dataset).values())
     print(ctInfo_pos)
     if len(ctInfo_pos) == 0:
         return HttpResponse(json.dumps(ctInfo_pos), content_type="application/json", status=460)

@@ -9,7 +9,9 @@ import mysql.connector
 def insert_ct_info(patient_id, sym, photo_id, dia_list, annotation, dataset):
     mydb = mysql.connector.connect(user='root', password='Cc01300041',
                                    host='127.0.0.1',
-                                   database='medi')
+                                   database='medi',
+                                   auth_plugin='mysql_native_password',
+                                   charset="utf8")
     # cursor.execute("CREATE TABLE sites (name VARCHAR(255), url VARCHAR(255))")
     mycursor = mydb.cursor()
 
