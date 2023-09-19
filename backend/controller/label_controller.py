@@ -48,9 +48,10 @@ def done_labeling(request, dataset):
         print(VQApath)
         mysqlConnector.setDatasetStatus(dataset, VQApath)
         LOGGER.info(dataset)
+        return HttpResponse("success")
     except Exception as e:
         LOGGER.error(str(e), e)
-    return HttpResponse("success")
+        return HttpResponse("error", status=400)
 
 
 @csrf_exempt

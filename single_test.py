@@ -1,29 +1,50 @@
-# import spacy
-# import en_ner_bc5cdr_md
-import en_core_sci_md
+# # 生成随机数
+# import random
+#
+# random_alphanumeric = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+# random_str = ''.join(random.choice(random_alphanumeric) for _ in range(15))
+# print(random_str)
+#
+# # 文件重命名
+import os
+from MEDI.settings import project_path
+#
+# os.rename(project_path + 'backend/tests.py', project_path + 'backend/' + random_str + '.py')
+#
+# 文件相关操作
+file = open(project_path + 'backend/tests.py')
+file_name = str(file.name.split('/')[-1])
+print(file_name)
+print(file_name[-3:])  # 后缀
 
-# en_ner_bc5cdr_md和en_core_sci_md兼容spacy3.4.4
-# en_core_web_sm要求更高版本的spacy
-# en_ner_bc5cdr_md对应的训练数据集：https://huggingface.co/datasets/tner/bc5cdr,
-# a resource for chemical disease relation extraction
-# en_ner_bc5cdr_md和en_core_web_sm都识别不出entity
+# 判断文件（夹）是否存在
+if not os.path.exists(project_path+'test'):
+    os.makedirs(project_path+'test')
 
-# text = """
-# Myeloid derived suppressor cells (MDSC) are immature
-# myeloid cells with immunosuppressive activity.
-# They accumulate in tumor-bearing mice and humans
-# with different types of cancer, including hepatocellular
-# carcinoma (HCC).
-# """
-
-nlp = en_core_sci_md.load()
-text = """
-Are the kidneys hyper attenuated? | Yes
-What is the air under the patient's left hemidiaphragm? | Stomach bubble
-Is/Are there pulmonary consolidations? | No
-"""
-doc = nlp(text)
-
-print(list(doc.sents))
-
-print(doc.ents)
+# 文件拷贝
+# with open(file.name, 'wb+') as f:
+#     for chunk in file.chunks():
+#         f.write(chunk)
+#
+# # 数据库查询API
+# import json
+# from django.http import HttpResponse
+# from django.views.decorators.csrf import csrf_exempt
+# from django.views.decorators.http import require_http_methods
+#
+# from backend.models import Dataset
+# @csrf_exempt
+# @require_http_methods(["GET"])
+# def get_all_models(request):
+#     # 查询后直接返回
+#     ret = list(Dataset.objects.all().values())
+#     # 进一步筛选
+#     ret2 = []
+#     for dataset in ret:
+#         if dataset.islabeled == "0":
+#             continue
+#         ret2.append(dataset.name)
+#     # 条件查询
+#     ret3 = Dataset.objects.filter(status=0, islabeled="0").values()
+#
+#     return HttpResponse(json.dumps(ret2), content_type="application/json")
