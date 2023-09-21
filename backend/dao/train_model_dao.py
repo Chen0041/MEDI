@@ -1,6 +1,6 @@
 from backend.models import Report
-from backend.service import train_model_service
 
 
 def get_all_models():
-    return  train_model_service.get_all_models()
+    models = list(Report.objects.filter(state='done'))
+    return models

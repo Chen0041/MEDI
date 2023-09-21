@@ -1,10 +1,10 @@
 import json
 import os
-from concurrent.futures._base import LOGGER
+import logging
 
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 
 from backend.models import Dataset
 from backend.service import dataset_service
@@ -17,7 +17,7 @@ from MEDI.settings import dataset_upload, frontend_static
 @require_http_methods(["GET"])
 def get_datasets(request):
     datasets = dataset_service.get_all_datasets()
-    print(datasets)
+    # print(datasets)
     return HttpResponse(json.dumps(datasets), content_type="application/json")
 
 @csrf_exempt
@@ -31,7 +31,7 @@ def get_all_names_labeled(request):
             continue
         ret.append(dataset.name)
 
-    print(ret)
+    # print(ret)
     return HttpResponse(json.dumps(ret), content_type="application/json")
 
 
@@ -42,12 +42,12 @@ def get_all_names(request):
 
     ret = []
     for dataset in dataset_pos:
-        print(dataset.name)
+        # print(dataset.name)
         if dataset.islabeled == "1":
             continue
         ret.append(dataset.name)
 
-    print(ret)
+    # print(ret)
     return HttpResponse(json.dumps(ret), content_type="application/json")
 
 
@@ -61,12 +61,12 @@ def add_dataset(request):
     test = request.POST.get('test', None)
 
     if len(name) == 0 or len(description) == 0 or train == 0 or valid is None or test == 0:
-        return HttpResponse("Invalid request parameters", status=400)
+        return HttpResponse("Invalid request parameters", status=400, content_type="application/json")
     else:
         dataset_po = Dataset(name=name, description=description, islabeled="0", status=0, test=test, train=train,
                              valid=valid)
         dataset_service.add_dataset(dataset_po)
-        return HttpResponse("Dataset added successfully")
+        return HttpResponse("Dataset added successfully", content_type="application/json")
 
 
 @csrf_exempt
@@ -74,7 +74,7 @@ def add_dataset(request):
 def upload(request):
     upload_file = request.FILES.get('file')
     if not upload_file:
-        return JsonResponse({"error": "Upload failed, please choose a file"}, status=400)
+        return HttpResponse("error, Upload failed, please choose a file", status=400, content_type="application/json")
 
     save_path = os.path.join(dataset_upload, upload_file.name)
     with open(save_path, 'wb+') as f:
@@ -82,9 +82,10 @@ def upload(request):
             f.write(chunk)
 
     try:
+        # TODO
         python_main(save_path, frontend_static)
-        # python_main(file_path, img_path)
-        return HttpResponse("success")
+        return HttpResponse("success", content_type="application/json")
     except Exception as e:
-        LOGGER.error(str(e), e)
-        return JsonResponse({"error": "Upload failed"}, status=400)
+        # logging只输出在后端
+        logging.error(str(e))
+        return HttpResponse("error, Upload failed", status=400, content_type="application/json")

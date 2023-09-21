@@ -1,10 +1,10 @@
 import json
 import os
-from concurrent.futures._base import LOGGER
+import logging
 
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 
 from MEDI.settings import dataset_upload
 from backend.models import CtValidation, CtInformation
@@ -24,7 +24,7 @@ def upload_label(request, dataset):
     position = request.POST.get('position', default="")
     if len(patient_id) == 0 or len(dia_list) == 0 or len(photo_id) == 0 or len(description) == 0 or \
             len(bone_name) == 0 or len(direction) == 0 or len(type_) == 0 or len(position) == 0:
-        return HttpResponse("Invalid request parameters", status=400)
+        return HttpResponse("Invalid request parameters", status=400, content_type="application/json")
     else:
         ct_validation_po = CtValidation(patient_id=patient_id, photo_id=photo_id, dia_list=dia_list,
                                         description=description,
@@ -33,11 +33,10 @@ def upload_label(request, dataset):
         ct_validation_po.save()
 
         ct_information_po = CtInformation.objects.get(patient_id=patient_id, photo_id=photo_id, dataset=dataset)
-        ct_information_po.status = 1
-        ct_information_po.dia_list = dia_list
+        ct_information_po.status = '1'
         ct_information_po.save()
 
-        return HttpResponse("success")
+        return HttpResponse("success", content_type="application/json")
 
 
 @csrf_exempt
@@ -47,18 +46,18 @@ def done_labeling(request, dataset):
         VQApath = dataset_upload + "/" + dataset + "/VQA/"
         print(VQApath)
         mysqlConnector.setDatasetStatus(dataset, VQApath)
-        LOGGER.info(dataset)
-        return HttpResponse("success")
+        logging.info(dataset)
+        return HttpResponse("success", content_type="application/json")
     except Exception as e:
-        LOGGER.error(str(e), e)
-        return HttpResponse("error", status=400)
+        logging.error(str(e), e)
+        return HttpResponse("error", status=400, content_type="application/json")
 
 
 @csrf_exempt
 @require_http_methods(["GET"])
 def get_all_patients(request, dataset):
-    ctInfo_pos = list(CtInformation.objects.filter(status=0, dataset=dataset).values())
-    print(ctInfo_pos)
+    ctInfo_pos = list(CtInformation.objects.filter(status='0', dataset=dataset).values())
+    # print(ctInfo_pos)
     if len(ctInfo_pos) == 0:
         return HttpResponse(json.dumps(ctInfo_pos), content_type="application/json", status=460)
     else:

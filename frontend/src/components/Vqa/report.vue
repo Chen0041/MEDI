@@ -89,7 +89,7 @@
               </el-table-column>
 
               <el-table-column
-                  prop="batch"
+                  prop="batchsize"
                   label="Batchsize"
                   width="180"
               >
