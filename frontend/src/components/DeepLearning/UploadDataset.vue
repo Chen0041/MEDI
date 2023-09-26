@@ -176,7 +176,7 @@
             loadDataset() {
                 this.$axios({
                     method: 'get',
-                    url: '/doctor/' + this.$store.state.user.id + '/dataSets',
+                    url: '/doctor/' + this.$store.state.user.id + '/availableDataSets',
                 }).then(res => {
                     // console.log(res.data);
                     this.datasetTableData.length = 0;
