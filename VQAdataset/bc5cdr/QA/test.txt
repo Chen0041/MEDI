@@ -1,0 +1,6 @@
+9|I have overdosage, what treatment is available?|Galanthamine hydrobromide
+9|I have overdosage, what treatment is available?|scopolamine
+9|I have overdosage, what treatment is available?|Hyoscine
+9|I have overdosage, what treatment is available?|Galanthamine hydrobromide
+9|I have overdosage, what treatment is available?|scopolamine
+9|I have overdosage, what treatment is available?|hyoscine

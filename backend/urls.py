@@ -9,9 +9,9 @@ from .controller import dataset_controller, label_controller, consult_VQA_contro
 urlpatterns = [
     # 加上每个 Controller文件开头的 @RequestMapping("XXX")
     # 格式：'XXX/YYY'，前后没有'/'
+
     # path('', views.login),
-    # path('index', views.index),
-    # path('user/login', views.login),
+    path('singleTest', dataset_controller.single_test),
 
     # consult_VQA_controller
     path('models', consult_VQA_controller.get_all_models),
@@ -23,11 +23,10 @@ urlpatterns = [
     path('dataSetsNames', dataset_controller.get_all_names),
     path('dataSetsNamesLabeled', dataset_controller.get_all_names_labeled),
     path('addDataset', dataset_controller.add_dataset),
-    # TODO:python
+    # TODO: zh python
     path('upload', dataset_controller.upload),
 
     # label_controller
-    # TODO:test
     path('vqa/<str:dataset>', label_controller.upload_label),  # label.vue
     # TODO:python
     path('doneLabeling/<str:dataset>', label_controller.done_labeling),
@@ -150,6 +149,7 @@ urlpatterns = [
     # user_controller
     path('user/login', user_controller.login),
     path('user/register', user_controller.user_register),
-    path('user', user_controller.get_all_users),
+    # path('user', user_controller.get_all_users), no usage
+    # TODO: Q&A Question search
     path('user/similarityQuestion', user_controller.search_simple_question),
 ]

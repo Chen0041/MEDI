@@ -1,0 +1,14 @@
+1|I have hypertensive, what treatment is available?|clonidine
+1|I have hypertensive, what treatment is available?|nalozone
+10|I have chronic renal failure, what treatment is available?|lithium
+2|I have hypotensive, what treatment is available?|alpha-methyldopa
+2|I have hypotensive, what treatment is available?|naloxone
+3|I have hypertensive, what treatment is available?|clonidine
+3|I have hypertensive, what treatment is available?|naloxone
+3|I have hypertensive, what treatment is available?|clonidine
+3|I have hypertensive, what treatment is available?|[3H]-dihydroergocryptine
+3|I have hypertensive, what treatment is available?|clonidine
+3|I have hypertensive, what treatment is available?|naloxone
+3|I have hypertensive, what treatment is available?|clonidine
+3|I have hypertensive, what treatment is available?|[3H]-dihydroergocryptine
+4|I have cardiac asystole, what treatment is available?|Lidocaine

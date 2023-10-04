@@ -14,7 +14,8 @@
         </ul>
       </div>
       <div class="nav-right">
-        <span>{{'Hi, ' + this.$store.state.user.username}}</span>&nbsp;|&nbsp;<el-button type="text" @click="logOut">Log Out</el-button>
+        <span>{{'Hi, ' + this.$store.state.user}}</span>&nbsp;|&nbsp;<el-button type="text" @click="logOut">Log Out</el-button>
+<!--        <span>{{'Hi, ' + this.$store.state.user.username}}</span>&nbsp;|&nbsp;<el-button type="text" @click="logOut">Log Out</el-button>-->
       </div>
     </div>
   </el-header>
@@ -41,7 +42,7 @@
         },
         methods: {
             goToMainPage() {
-                this.$router.push('/deepLearning');
+                this.$router.push('/vqa');
             },
             logOut() {
                 this.$confirm('Log Out? ', 'Notification', {

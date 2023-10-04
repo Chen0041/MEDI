@@ -5,9 +5,9 @@ import zipfile
 import csv
 import shutil
 
+from backend.models import CtInformation
 from .PreProcess import removePrivacy
 from .lstm_predict import predictAll
-from .mysqlconnect import insert_ct_info
 
 def organizeOriginalData(src_path):
     with open(src_path + '/relationship.csv', 'r') as f:
@@ -25,11 +25,11 @@ def organizeOriginalData(src_path):
             os.mkdir(src_path + '/organizedData')
 
         for key, value in img_txt_dic.items():
-            source_img_path = src_path + '/img/' + key + '.png'
+            source_img_path = src_path + '/img/' + key + '.jpg'
             source_txt_path = src_path + '/txt/' + value + '.txt'
             new_dir_path = src_path + '/organizedData/' + key
             os.mkdir(new_dir_path)
-            target_img_path = new_dir_path + '/' + key + '.png'
+            target_img_path = new_dir_path + '/' + key + '.jpg'
             target_txt_path = new_dir_path + '/' + value + '.txt'
 
             shutil.copy(source_img_path, target_img_path)
@@ -47,7 +47,7 @@ def unzip_file(zip_src, dst_dir):
 def generateQuestions(dicname):
     for i in os.listdir(dicname):
         # os.path.splitext():分离文件名与扩展名
-        if os.path.splitext(i)[1] == '.png':
+        if os.path.splitext(i)[1] == '.jpg':
             imgname = dicname +'/'+ i
         elif os.path.splitext(i)[1] == '.txt':
             textname = dicname +'/'+ i
@@ -64,7 +64,8 @@ def generateQuestions(dicname):
     photo_id = imgname.split('/')[-1]
     annotation = ''
     dataset = "xx"
-    insert_ct_info(patient_id,text,photo_id,dialist,annotation,dataset)
+    ct_info = CtInformation(patient_id=patient_id, sym=text, photo_id=photo_id, dia_list=dialist, annotation=annotation, status='0', dataset=dataset)
+    ct_info.save()
 
     QApath = dicname + '/QA.txt'
 
@@ -101,26 +102,38 @@ def generateDISnCHECK(dis,check):
     return [question,answer]
 
 
+def copyImgToImgpath(zip_dest, imgDest):
+    imgSrcPath = zip_dest + '/img'
+    if not os.path.exists(imgDest + '/' + zip_dest.split('/')[-1]):
+        print(imgDest)
+        print(zip_dest.split('/')[-1])
+        os.mkdir(imgDest + '/' + zip_dest.split('/')[-1])
+    for i in os.listdir(imgSrcPath):
+        src = imgSrcPath + '/' + i
 
-def main(src):
+        dest = imgDest + '/' + zip_dest.split('/')[-1] + '/' + i
+        shutil.copy(src, dest)
+
+
+def main(src, imgpath):
 
     zipDest=src[:-4]
     unzip_file(src, zipDest)
     organizeOriginalData(zipDest)
+    copyImgToImgpath(zipDest, imgpath)
+
     for dic in os.listdir(zipDest+"/organizedData"):
         dicname = zipDest+"/organizedData" + '/' + dic
-
-        print (os.listdir(dicname))
-
+        print(os.listdir(dicname))
         generateQuestions(dicname)
 
 
 # main(src)
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--name', default='test')
-    args = parser.parse_args()
-    dataset = args.name
-    print(dataset)
-    main(dataset)
+# if __name__ == '__main__':
+#     parser = argparse.ArgumentParser()
+#     parser.add_argument('--name', default='test')
+#     args = parser.parse_args()
+#     dataset = args.name
+#     print(dataset)
+#     main(dataset)
 

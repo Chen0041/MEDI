@@ -7,6 +7,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     user: JSON.parse(sessionStorage.getItem("addsCurrentUserInfo")) || {},
+    userType: JSON.parse(sessionStorage.getItem("addsCurrentUserType")) || {},
     token: sessionStorage.getItem("addsCurrentUserToken") || "",
     sysData: JSON.parse(sessionStorage.getItem("addsSysData")) || {}
   },
@@ -16,6 +17,10 @@ const store = new Vuex.Store({
       // console.log(state.user);
       // Save "userInfo" to sessionStorage
       sessionStorage.setItem("addsCurrentUserInfo", JSON.stringify(userInfo));
+    },
+    saveUserType(state, userType) {
+      state.userType = userType;
+      sessionStorage.setItem("addsCurrentUserType", JSON.stringify(userType));
     },
     saveToken(state, token) {
       state.token = token;

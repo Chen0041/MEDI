@@ -1,0 +1,1 @@
+上传的图片如需修改格式，在backend/vqa_dataset_gene/zh/main.py中修改，目前为*.jpg

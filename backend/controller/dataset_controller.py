@@ -8,9 +8,10 @@ from django.http import HttpResponse
 
 from backend.models import Dataset
 from backend.service import dataset_service
-from backend.vqa_dataset_gene.main import main as python_main
+from backend.vqa_dataset_gene.en.main import main as en_python_main
+from backend.vqa_dataset_gene.zh.main import main as zh_python_main
 
-from MEDI.settings import dataset_upload, frontend_static
+from MEDI.settings import project_path
 
 
 @csrf_exempt
@@ -76,14 +77,34 @@ def upload(request):
     if not upload_file:
         return HttpResponse("error, Upload failed, please choose a file", status=400, content_type="application/json")
 
+    dataset_upload = os.path.join(project_path, 'VQAdataset/')
+    # print(dataset_upload)
     save_path = os.path.join(dataset_upload, upload_file.name)
+    # print(save_path)
     with open(save_path, 'wb+') as f:
         for chunk in upload_file.chunks():
             f.write(chunk)
 
     try:
         # TODO
-        python_main(save_path, frontend_static)
+        frontend_static = os.path.join(project_path, 'frontend/static')
+        en_python_main(save_path, frontend_static)
+        # zh_python_main(save_path)
+        return HttpResponse("success", content_type="application/json")
+    except Exception as e:
+        # logging只输出在后端
+        logging.error(str(e))
+        return HttpResponse("error, Upload failed", status=400, content_type="application/json")
+
+
+@csrf_exempt
+@require_http_methods(["GET"])
+def single_test(request):
+    try:
+        # TODO
+        frontend_static = os.path.join(project_path, 'frontend/static')
+        save_path = os.path.join(project_path, 'VQAdataset/Slake.zip')
+        zh_python_main(save_path, frontend_static)
         return HttpResponse("success", content_type="application/json")
     except Exception as e:
         # logging只输出在后端

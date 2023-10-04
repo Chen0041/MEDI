@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
-from backend.models import Report, ReportVoForm
+from backend.models import Report
 from backend.service import train_model_service
 
 
@@ -13,9 +13,9 @@ from backend.service import train_model_service
 @require_http_methods(["POST"])
 def set_train_error(request, name):
     try:
-        report_po = Report.objects.get(name=name)
-        report_po.state = 'failed'
-        report_po.save()
+        # report_po = Report.objects.get(name=name)
+        # report_po.state = 'failed'
+        # report_po.save()
         return HttpResponse("success", content_type="application/json")
     except Exception as e:
         logging.error(str(e))

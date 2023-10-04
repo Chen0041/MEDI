@@ -9,25 +9,6 @@ from django.db import models
 from django import forms
 
 
-# VO
-class ReportVo(models.Model):
-    name = models.CharField(max_length=255)
-    data = models.CharField(max_length=255)
-    date = models.CharField(max_length=255)
-    batchsize = models.CharField(max_length=8)
-    epoch = models.CharField(max_length=8)
-    rnn_cell = models.CharField(max_length=255)
-    embedding = models.CharField(max_length=255)
-    attention = models.CharField(max_length=255)
-    constructor = models.CharField(max_length=255)
-
-
-class ReportVoForm(forms.ModelForm):
-    class Meta:
-        model = ReportVo
-        fields = ['name', 'data', 'date', 'batchsize', 'epoch', 'rnn_cell', 'embedding', 'attention', 'constructor']
-
-
 # DATABASE
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
@@ -184,7 +165,8 @@ class DeepModel(models.Model):
     model_article_url = models.CharField(max_length=255, blank=True, null=True)
     model_architecture_url = models.CharField(max_length=255, blank=True, null=True)
     model_code_url = models.CharField(max_length=255, blank=True, null=True)
-    model_category = models.ForeignKey('DeepModelCategory', models.DO_NOTHING, db_column='model_category', blank=True, null=True)
+    model_category = models.ForeignKey('DeepModelCategory', models.DO_NOTHING, db_column='model_category', blank=True,
+                                       null=True)
     config_file = models.CharField(max_length=255, blank=True, null=True)
     model_py = models.CharField(max_length=255, blank=True, null=True)
 
@@ -212,18 +194,29 @@ class DeepModelMetric(models.Model):
 class DeepModelTaskResult(models.Model):
     task_id = models.IntegerField(blank=True, null=True)
     model_id = models.BigIntegerField(blank=True, null=True)
-    ndcg_1 = models.CharField(db_column='ndcg@1', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    ndcg_3 = models.CharField(db_column='ndcg@3', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    ndcg_5 = models.CharField(db_column='ndcg@5', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    ndcg_10 = models.CharField(db_column='ndcg@10', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    ndcg_1 = models.CharField(db_column='ndcg@1', max_length=255, blank=True,
+                              null=True)  # Field renamed to remove unsuitable characters.
+    ndcg_3 = models.CharField(db_column='ndcg@3', max_length=255, blank=True,
+                              null=True)  # Field renamed to remove unsuitable characters.
+    ndcg_5 = models.CharField(db_column='ndcg@5', max_length=255, blank=True,
+                              null=True)  # Field renamed to remove unsuitable characters.
+    ndcg_10 = models.CharField(db_column='ndcg@10', max_length=255, blank=True,
+                               null=True)  # Field renamed to remove unsuitable characters.
     map = models.CharField(max_length=255, blank=True, null=True)
-    recall_3 = models.CharField(db_column='recall@3', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    recall_5 = models.CharField(db_column='recall@5', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    recall_10 = models.CharField(db_column='recall@10', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    pre_1 = models.CharField(db_column='pre@1', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    pre_3 = models.CharField(db_column='pre@3', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    pre_5 = models.CharField(db_column='pre@5', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    pre_10 = models.CharField(db_column='pre@10', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    recall_3 = models.CharField(db_column='recall@3', max_length=255, blank=True,
+                                null=True)  # Field renamed to remove unsuitable characters.
+    recall_5 = models.CharField(db_column='recall@5', max_length=255, blank=True,
+                                null=True)  # Field renamed to remove unsuitable characters.
+    recall_10 = models.CharField(db_column='recall@10', max_length=255, blank=True,
+                                 null=True)  # Field renamed to remove unsuitable characters.
+    pre_1 = models.CharField(db_column='pre@1', max_length=255, blank=True,
+                             null=True)  # Field renamed to remove unsuitable characters.
+    pre_3 = models.CharField(db_column='pre@3', max_length=255, blank=True,
+                             null=True)  # Field renamed to remove unsuitable characters.
+    pre_5 = models.CharField(db_column='pre@5', max_length=255, blank=True,
+                             null=True)  # Field renamed to remove unsuitable characters.
+    pre_10 = models.CharField(db_column='pre@10', max_length=255, blank=True,
+                              null=True)  # Field renamed to remove unsuitable characters.
 
     class Meta:
         managed = False
@@ -466,7 +459,8 @@ class QuestionDetailAnswer(models.Model):
 
 class QuestionTest(models.Model):
     content = models.TextField(blank=True, null=True)
-    hospitaldepartmentid = models.IntegerField(db_column='hospitalDepartmentId', blank=True, null=True)  # Field name made lowercase.
+    hospitaldepartmentid = models.IntegerField(db_column='hospitalDepartmentId', blank=True,
+                                               null=True)  # Field name made lowercase.
     type = models.CharField(max_length=255, blank=True, null=True)
     user_id = models.IntegerField(blank=True, null=True)
     remark = models.CharField(max_length=255, blank=True, null=True)
@@ -547,7 +541,7 @@ class SysUser(models.Model):
     gender = models.CharField(max_length=1, blank=True, null=True)
     phone = models.CharField(max_length=18, blank=True, null=True)
     type = models.IntegerField()
-    state = models.TextField()  # This field type is a guess.
+    state = models.IntegerField()  # change byte to int
     email = models.CharField(max_length=50, blank=True, null=True)
     picture = models.CharField(max_length=50, blank=True, null=True)
     identityid = models.CharField(db_column='identityID', max_length=18)  # Field name made lowercase.
@@ -567,12 +561,18 @@ class TaskResultEvaluationTemp(models.Model):
     task_id = models.IntegerField(blank=True, null=True)
     model_id = models.BigIntegerField(blank=True, null=True)
     map = models.CharField(max_length=255, blank=True, null=True)
-    p_3 = models.CharField(db_column='p@3', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    p_5 = models.CharField(db_column='p@5', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    r_3 = models.CharField(db_column='r@3', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    r_5 = models.CharField(db_column='r@5', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    n_3 = models.CharField(db_column='n@3', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    n_5 = models.CharField(db_column='n@5', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    p_3 = models.CharField(db_column='p@3', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    p_5 = models.CharField(db_column='p@5', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    r_3 = models.CharField(db_column='r@3', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    r_5 = models.CharField(db_column='r@5', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    n_3 = models.CharField(db_column='n@3', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    n_5 = models.CharField(db_column='n@5', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
 
     class Meta:
         managed = False
@@ -584,12 +584,18 @@ class TaskResultExplorationTemp(models.Model):
     task_id = models.IntegerField(blank=True, null=True)
     model_id = models.BigIntegerField(blank=True, null=True)
     map = models.CharField(max_length=255, blank=True, null=True)
-    p_3 = models.CharField(db_column='p@3', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    p_5 = models.CharField(db_column='p@5', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    r_3 = models.CharField(db_column='r@3', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    r_5 = models.CharField(db_column='r@5', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    n_3 = models.CharField(db_column='n@3', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    n_5 = models.CharField(db_column='n@5', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    p_3 = models.CharField(db_column='p@3', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    p_5 = models.CharField(db_column='p@5', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    r_3 = models.CharField(db_column='r@3', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    r_5 = models.CharField(db_column='r@5', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    n_3 = models.CharField(db_column='n@3', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    n_5 = models.CharField(db_column='n@5', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
 
     class Meta:
         managed = False
@@ -601,12 +607,18 @@ class TaskResultSelectionTemp(models.Model):
     task_id = models.IntegerField(blank=True, null=True)
     model_id = models.BigIntegerField(blank=True, null=True)
     map = models.CharField(max_length=255, blank=True, null=True)
-    p_3 = models.CharField(db_column='p@3', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    p_5 = models.CharField(db_column='p@5', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    r_3 = models.CharField(db_column='r@3', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    r_5 = models.CharField(db_column='r@5', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    n_3 = models.CharField(db_column='n@3', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    n_5 = models.CharField(db_column='n@5', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    p_3 = models.CharField(db_column='p@3', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    p_5 = models.CharField(db_column='p@5', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    r_3 = models.CharField(db_column='r@3', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    r_5 = models.CharField(db_column='r@5', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    n_3 = models.CharField(db_column='n@3', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    n_5 = models.CharField(db_column='n@5', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
 
     class Meta:
         managed = False
@@ -618,12 +630,18 @@ class TaskResultTemp(models.Model):
     task_id = models.IntegerField(blank=True, null=True)
     model_id = models.BigIntegerField(blank=True, null=True)
     map = models.CharField(max_length=255, blank=True, null=True)
-    p_3 = models.CharField(db_column='p@3', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    p_5 = models.CharField(db_column='p@5', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    r_3 = models.CharField(db_column='r@3', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    r_5 = models.CharField(db_column='r@5', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    n_3 = models.CharField(db_column='n@3', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    n_5 = models.CharField(db_column='n@5', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    p_3 = models.CharField(db_column='p@3', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    p_5 = models.CharField(db_column='p@5', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    r_3 = models.CharField(db_column='r@3', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    r_5 = models.CharField(db_column='r@5', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    n_3 = models.CharField(db_column='n@3', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
+    n_5 = models.CharField(db_column='n@5', max_length=255, blank=True,
+                           null=True)  # Field renamed to remove unsuitable characters.
 
     class Meta:
         managed = False

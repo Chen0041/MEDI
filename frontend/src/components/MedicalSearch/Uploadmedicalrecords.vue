@@ -1,7 +1,7 @@
 <template>
   <el-container id="container" direction="vertical">
 
-      <el-form v-if="this.$store.state.user.type != 3" ref="downloadForm3" :model="downloadForm3" label-position="left" label-width="110px">
+      <el-form v-if="this.$store.state.userType != 3" ref="downloadForm3" :model="downloadForm3" label-position="left" label-width="110px">
           <el-form-item label="File Format:">
               <el-button
                       type="primary"
@@ -12,7 +12,7 @@
           </el-form-item>
       </el-form>
 
-    <el-form v-if="this.$store.state.user.type != 3" ref="uploadForm1" :model="uploadForm1" label-position="left" label-width="110px">
+    <el-form v-if="this.$store.state.userType != 3" ref="uploadForm1" :model="uploadForm1" label-position="left" label-width="110px">
       <el-form-item label="File Upload:" prop="uploadFile">
         <el-upload
           ref="upload"
@@ -30,12 +30,12 @@
         <el-input type="textarea" :rows="6" v-model="uploadForm1.desc"></el-input>
       </el-form-item>
     </el-form>
-    <div v-if="this.$store.state.user.type != 3" id="footer1">
+    <div v-if="this.$store.state.userType != 3" id="footer1">
       <el-button size="small" type="primary" @click="upload">Submit</el-button>
     </div>
 
 
-      <el-form v-if="this.$store.state.user.type == 3" ref="downloadForm2" :model="downloadForm2" label-position="left" label-width="170px">
+      <el-form v-if="this.$store.state.userType == 3" ref="downloadForm2" :model="downloadForm2" label-position="left" label-width="170px">
           <el-form-item label="Sample File Format:">
       <el-button
               type="primary"
@@ -46,7 +46,7 @@
           </el-form-item>
       </el-form>
 
-      <el-form v-if="this.$store.state.user.type == 3" ref="uploadForm2" :model="uploadForm2" label-position="left" label-width="170px">
+      <el-form v-if="this.$store.state.userType == 3" ref="uploadForm2" :model="uploadForm2" label-position="left" label-width="170px">
           <el-form-item label="Medical Cases Upload:" prop="uploadFile">
               <el-upload
                       ref="uploadCsv"
@@ -67,7 +67,7 @@
           </el-form-item>
 
       </el-form>
-      <div v-if="this.$store.state.user.type == 3" id="footer2">
+      <div v-if="this.$store.state.userType == 3" id="footer2">
           <el-button size="small" type="primary" @click="uploadCsv">Submit</el-button>
       </div>
 

@@ -1,0 +1,4 @@
+5|I have depression, what treatment is available?|lidocaine
+6|I have bradyarrhythmias, what treatment is available?|lidocaine
+7|I have fasciculations, what treatment is available?|Suxamethonium
+8|I have tetanic, what treatment is available?|Sch

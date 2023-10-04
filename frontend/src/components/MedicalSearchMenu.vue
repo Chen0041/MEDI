@@ -6,9 +6,9 @@
         :default-active="this.$route.path"
         :default-openeds="['2']">
         <el-menu-item index="/medicalCaseDeepSearch/uploadMedicalRecords">Upload Medical Records</el-menu-item>
-        <el-menu-item v-if="this.$store.state.user.type != 3" index="/medicalCaseDeepSearch/caseSearch">Medical Case Search</el-menu-item>
-        <el-menu-item v-if="this.$store.state.user.type == 3" index="/medicalCaseDeepSearch/caseCluster">Medical Records Cluster</el-menu-item>
-        <el-menu-item index="/medicalCaseDeepSearch/SubmitQuestions">Submit Questions</el-menu-item>
+        <el-menu-item v-if="this.$store.state.userType != 3" index="/medicalCaseDeepSearch/caseSearch">Medical Case Search</el-menu-item>
+        <el-menu-item v-if="this.$store.state.userType != 3" index="/medicalCaseDeepSearch/SubmitQuestions">Submit Questions</el-menu-item>
+        <el-menu-item v-if="this.$store.state.userType == 3" index="/medicalCaseDeepSearch/caseCluster">Medical Records Cluster</el-menu-item>
 
 <!--        <el-menu-item index="/medicalCaseDeepSearch/submitQuestions">Submit Questions</el-menu-item>-->
       </el-menu>

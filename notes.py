@@ -30,6 +30,7 @@ if not os.path.exists(project_path + 'test'):
 # 数据库查询API
 import json
 import logging
+import jwt
 
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -37,12 +38,33 @@ from django.views.decorators.http import require_http_methods
 
 from backend.models import Dataset, Report
 
+@csrf_exempt
+@require_http_methods(["POST"])
+def login(request):
+    # 从前端获取对象
+    file = request.FILES.get("file")
+    dId = request.POST.get("dId")
+    # 获取前端传入的VO对象
+    login_vo = json.loads(request.body)
+    # print(login_vo)
+    # {'login_name': 'test', 'password': 'test'}
+
+    # HttpResponse相关参数
+    return_token = jwt.encode({"login_name": login_vo['login_name']}, "secret", algorithm="HS256")
+    # 字典序和json格式
+    info = json.dumps({"info": str(login_vo['login_name'])})
+    # 前端：ret.data.info = str(login_vo['login_name'])
+    response = HttpResponse(info, status=200, content_type='application/json')
+    response.headers['token'] = bytes.decode(return_token)
+    return response
+
 
 @csrf_exempt
 @require_http_methods(["GET"])
 def get_all_models(request):
     # 查询后直接返回
     ret = list(Dataset.objects.all().values())
+    # 加values用.索引，不加用['']索引
     # 进一步筛选，不用values
     ret2 = []
     for dataset in ret:
@@ -69,10 +91,6 @@ def get_all_models(request):
     @csrf_exempt
     @require_http_methods(["GET"])
     def get_reports(request):
-        # POST方法从前端获取对象
-        file = request.FILES.get("file")
-        dId = request.POST.get("dId")
-
         report_pos = list(Report.objects.all().values())
         ret = []
         for report_po in report_pos:
@@ -100,3 +118,9 @@ def get_all_models(request):
 # def相关
 def greet(name: str, age: int) -> str:
     return f"Hello, my name is {name} and I am {age} years old."
+
+
+# 数据类型转换
+token = b'123'
+temp = bytes.decode(token)
+token = temp.encode('utf-8')

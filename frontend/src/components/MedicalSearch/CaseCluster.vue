@@ -2,7 +2,7 @@
     <el-container id="container" direction="vertical">
 
 
-        <el-form v-if="this.$store.state.user.type == 3" ref="downloadForm2" :model="downloadForm2" label-position="left" label-width="170px">
+        <el-form v-if="this.$store.state.userType == 3" ref="downloadForm2" :model="downloadForm2" label-position="left" label-width="170px">
             <el-form-item label="Sample File Format:">
                 <el-button
                         type="primary"
@@ -13,7 +13,7 @@
             </el-form-item>
         </el-form>
 
-        <el-form v-if="this.$store.state.user.type == 3" ref="uploadForm2" :model="uploadForm2" label-position="left" label-width="170px">
+        <el-form v-if="this.$store.state.userType == 3" ref="uploadForm2" :model="uploadForm2" label-position="left" label-width="170px">
             <el-form-item label="Medical Cases Upload:" prop="uploadFile">
                 <el-upload
                         ref="uploadCsv"
@@ -48,7 +48,7 @@
         <div class="Echarts">
             <div id="main" style="width: 600px;height:400px;"></div>
 
-            <el-form v-if="this.$store.state.user.type == 3" ref="downloadForm1" :model="downloadForm1" label-position="left" label-width="170px">
+            <el-form v-if="this.$store.state.userType == 3" ref="downloadForm1" :model="downloadForm1" label-position="left" label-width="170px">
                 <el-form-item label="Report Download:">
                     <el-button
                             type="primary"
@@ -70,7 +70,7 @@
         </div>
 
 
-<!--        <el-form v-if="this.$store.state.user.type == 3" ref="downloadForm2" :model="downloadForm2" label-position="left" label-width="170px">-->
+<!--        <el-form v-if="this.$store.state.userType == 3" ref="downloadForm2" :model="downloadForm2" label-position="left" label-width="170px">-->
 <!--            <el-form-item label="Report Download:">-->
 <!--                <el-button-->
 <!--                        type="primary"-->

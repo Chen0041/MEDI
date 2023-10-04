@@ -1,3 +1,0 @@
-synpic42202|Is there evidence of an aortic aneurysm?|yes
-synpic54610|Is this an axial plane?|yes
-synpic29265|How is the patient oriented?|Posterior-Anterior

@@ -1,20 +1,18 @@
 import json
-import os
 import logging
 
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse
 
-from MEDI.settings import dataset_upload
-from backend.models import CtValidation, CtInformation
-from backend.vqa_dataset_gene import mysqlConnector
+from MEDI.settings import project_path
+from backend.models import CtValidation, CtInformation, Dataset
 
 
 @csrf_exempt
 @require_http_methods(["POST"])
 def upload_label(request, dataset):
-    patient_id = request.POST.get('description', default="")
+    patient_id = request.POST.get('patientId', default="")
     dia_list = request.POST.get('diaList', default="")
     photo_id = request.POST.get('photoId', default="")
     description = request.POST.get('description', default="")
@@ -40,13 +38,14 @@ def upload_label(request, dataset):
 
 
 @csrf_exempt
-@require_http_methods(["POST"])
+@require_http_methods(["GET"])
 def done_labeling(request, dataset):
     try:
-        VQApath = dataset_upload + "/" + dataset + "/VQA/"
-        print(VQApath)
-        mysqlConnector.setDatasetStatus(dataset, VQApath)
-        logging.info(dataset)
+        VQApath = project_path + "VQAdataset/" + dataset + "/VQA/"
+        dataset = Dataset.objects.get(name=dataset)
+        dataset.status = 1
+        dataset.link = VQApath
+        dataset.save()
         return HttpResponse("success", content_type="application/json")
     except Exception as e:
         logging.error(str(e), e)

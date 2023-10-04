@@ -14,7 +14,7 @@ from pathlib import Path
 
 # Used:
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent
 # C:\Users\CZS\Desktop\IDEA_Project\MEDI
 project_path = 'C:/Users/CZS/Desktop/IDEA_Project/MEDI/'
 dataset_upload = 'C:/Users/CZS/Desktop/IDEA_Project/MEDI/VQAdataset/'

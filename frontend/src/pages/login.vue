@@ -53,13 +53,14 @@
                         // console.log("Token: " + res.headers["token"]);
                         // Save user's info & token
                         this.$store.commit('saveUserInfo', res.data.info);
+                        this.$store.commit('saveUserType', res.data.type);
                         this.$store.commit('saveToken', res.headers["token"]);
                         this.$notify({
                             title: 'Success',
                             message: 'Welcome! ',
                             type: 'success'
                         });
-                        this.$router.push('/deepLearning');
+                        this.$router.push('/vqa');
                     }).catch(error => {
                         console.log(error);
                         // alert("Username or password is wrong! ");

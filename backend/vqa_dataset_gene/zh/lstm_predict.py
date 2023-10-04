@@ -165,6 +165,8 @@ def predict(string):
 
 def predictAll(dicname,destname):
         result=[]
+        with open(dicname, 'w', encoding='utf-8') as f:
+            f.close()
         with open(dicname, 'r', encoding='utf-8') as f: # 要去掉隐私的文件
             for line in f.readlines():
                 if len(line)>20:
